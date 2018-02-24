@@ -1,5 +1,5 @@
-CFLAGS=-g -O2 -Wall
-LDFLAGS=-g -ldl -lpthread
+CFLAGS=-g -O2 -Wall -DHAVE_READLINE -DHAVE_EDITLINE
+LDFLAGS=-g -ldl -lpthread -lreadline
 LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
          backup.lo bitvec.lo btmutex.lo btree.lo build.lo \
          callback.lo complete.lo ctime.lo \
