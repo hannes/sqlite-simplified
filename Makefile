@@ -1,5 +1,5 @@
 CFLAGS=-g -O2 -Wall
-
+LDFLAGS=-g -ldl -lpthread
 LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
          backup.lo bitvec.lo btmutex.lo btree.lo build.lo \
          callback.lo complete.lo ctime.lo \
@@ -23,7 +23,7 @@ LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
 all: sqlite
 
 clean:
-	rm *.lo
+	rm sqlite *.lo
 
 %.lo : %.c
 	$(CC) -c $(CFLAGS) $< -o $@
