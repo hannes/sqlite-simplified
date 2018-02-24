@@ -23,7 +23,7 @@ LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
 all: sqlite
 
 clean:
-	rm sqlite *.lo
+	rm -f sqlite *.lo
 
 %.lo : %.c
 	$(CC) -c $(CFLAGS) $< -o $@
