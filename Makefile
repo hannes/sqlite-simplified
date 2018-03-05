@@ -1,4 +1,4 @@
-CFLAGS=-g -O2 -Wall -DHAVE_READLINE -DHAVE_EDITLINE
+CFLAGS=-g -O0 -Wall -DHAVE_READLINE -DHAVE_EDITLINE -DHACK
 LDFLAGS=-g
 SYSTEM_LIBS=-ldl -lpthread -lreadline
 LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
