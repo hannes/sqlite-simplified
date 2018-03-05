@@ -1,4 +1,4 @@
-CFLAGS=-g -O0 -Wall -DHAVE_READLINE -DHAVE_EDITLINE -DHACK
+CFLAGS=-g -O0 -Wall -DHAVE_READLINE -DHAVE_EDITLINE -DHACK -DSQLITE_DEBUG
 LDFLAGS=-g
 SYSTEM_LIBS=-ldl -lpthread -lreadline
 LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
@@ -19,15 +19,25 @@ LIBOBJS0 = alter.lo analyze.lo attach.lo auth.lo \
          update.lo util.lo vacuum.lo \
          vdbe.lo vdbeapi.lo vdbeaux.lo vdbeblob.lo vdbemem.lo vdbesort.lo \
          vdbetrace.lo wal.lo walker.lo where.lo wherecode.lo whereexpr.lo \
-         utf.lo vtab.lo shell.lo
+         utf.lo vtab.lo   
 
-all: sqlite
+all: sqlite libsqlite.dylib hack
 
 clean:
 	rm -f sqlite *.lo
+	rm -f libsqlite.dylib
+	rm -f hack.dylib
 
 %.lo : %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
-sqlite: $(LIBOBJS0)
-	$(CC) $(LDFLAGS) $(LIBOBJS0) $(SYSTEM_LIBS) -o sqlite
+sqlite: $(LIBOBJS0) shell.lo
+	$(CC) $(LDFLAGS) $(LIBOBJS0) shell.lo $(SYSTEM_LIBS) -o sqlite
+
+
+libsqlite.dylib: $(LIBOBJS0)
+	$(CC) $(LDFLAGS) $(LIBOBJS0) $(SYSTEM_LIBS) -o libsqlite.dylib -shared
+
+
+hack: libsqlite.dylib
+	$(CC) $(CFLAGS) hack.c -o hack.dylib -lsqlite -L. -shared
